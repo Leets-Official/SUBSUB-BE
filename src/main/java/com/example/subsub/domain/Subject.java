@@ -5,14 +5,14 @@ import lombok.*;
 
 
 @Entity
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Subject {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false,nullable = false)
-    private int id;
+    @Column(name = "subject_id", nullable = false)
+    private Integer id;
 
     @Column(nullable = false)
     private String subjectName;
@@ -30,7 +30,17 @@ public class Subject {
     private String color;
 
     @Column(nullable = false)
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="user_userId")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private User userId;
+
+    @Builder
+    private Subject(String subjectName, String professorName, String day, String classType, String color, User userId) {
+        this.subjectName = subjectName;
+        this.professorName = professorName;
+        this.day = day;
+        this.classType = classType;
+        this.color = color;
+        this.userId = userId;
+    }
 }

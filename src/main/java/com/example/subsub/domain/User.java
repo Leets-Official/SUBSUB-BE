@@ -4,14 +4,18 @@ import lombok.*;
 
 @Entity
 @Builder
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
+
     @Id
-    @Column(updatable = false, nullable = false)
+    @Column(name = "user_id", nullable = false)
     private String userId;
+
     @Column(nullable = false)
-    private String nickname;
-    @Column(updatable = false, nullable = false)
-    private String password;
+    private String nickName;
+
+    @Column(nullable = false)
+    private String passWord;
 }
