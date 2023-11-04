@@ -1,31 +1,35 @@
 package com.example.subsub.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Property {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false,nullable = false)
-    private int id;
+    private Integer id;
 
     @Column(nullable = false)
-    private LocalDateTime expired_at;
+    private LocalDateTime expiredAt;
 
     @Column(nullable = false)
     private String content;
 
     @Column(nullable = false)
-    @ManyToOne(cascade= CascadeType.ALL)
-    @JoinColumn(name="subject_id")
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "subject_id")
     private Subject subjectId;
+
+    @Builder
+    private Property(LocalDateTime expiredAt, String content, Subject subjectId) {
+        this.expiredAt = expiredAt;
+        this.content = content;
+        this.subjectId = subjectId;
+    }
 }
