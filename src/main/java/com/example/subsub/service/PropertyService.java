@@ -28,4 +28,8 @@ public class PropertyService {
             throw new IllegalArgumentException("과목 생성이 되지 않았습니다.");
         }
     }
+
+    public void delete(Integer subjectId, Integer id) {
+        propertyRepository.deleteBySubjectIdAndId(subjectId, id);
+    }
 }

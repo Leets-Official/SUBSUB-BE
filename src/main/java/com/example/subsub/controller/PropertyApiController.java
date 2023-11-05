@@ -20,4 +20,10 @@ public class PropertyApiController {
         Property savedProperty = propertyService.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProperty);
     }
+
+    @DeleteMapping("/{subjectId}/{id}")
+    public ResponseEntity<Void> deleteProperty(@PathVariable Integer subjectId, @PathVariable Integer id){
+        propertyService.delete(subjectId, id);
+        return ResponseEntity.ok().build();
+    }
 }
