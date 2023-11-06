@@ -1,5 +1,4 @@
 package com.example.subsub.domain;
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,12 +7,13 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Builder
+@AllArgsConstructor
 public class Property {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false,nullable = false)
-    private Integer id;
+    private Integer propertyId;
 
     @Column(nullable = false)
     private LocalDateTime expiredAt;
@@ -21,15 +21,7 @@ public class Property {
     @Column(nullable = false)
     private String content;
 
-    @Column(nullable = false)
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "subject_id")
-    private Subject subjectId;
+    @ManyToOne
+    private Subject subject;
 
-    @Builder
-    private Property(LocalDateTime expiredAt, String content, Subject subjectId) {
-        this.expiredAt = expiredAt;
-        this.content = content;
-        this.subjectId = subjectId;
-    }
 }
