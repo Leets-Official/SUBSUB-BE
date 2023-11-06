@@ -11,15 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 public class AddPropertyRequest {
 
+    private final Integer subjectId;
     private final LocalDateTime expiredAt;
     private final String content;
-    private final Integer subjectId;
-
-    public Property toEntity() {
-        return Property.builder()
-                .expiredAt(expiredAt)
-                .content(content)
-                .subjectId(subjectId)
-                .build();
-    }
 }

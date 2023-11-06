@@ -2,7 +2,7 @@ package com.example.subsub.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
+@Entity(name = "users")
 @Builder
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -10,7 +10,7 @@ import lombok.*;
 public class User {
 
     @Id
-    @Column(name = "user_id", nullable = false)
+    @Column(nullable = false)
     private String userId;
 
     @Column(nullable = false)

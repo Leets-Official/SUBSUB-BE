@@ -1,6 +1,7 @@
 package com.example.subsub.controller;
 
 import com.example.subsub.domain.Property;
+import com.example.subsub.dto.PropertyDTO;
 import com.example.subsub.dto.request.AddPropertyRequest;
 import com.example.subsub.service.PropertyService;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +17,14 @@ public class PropertyApiController {
     private final PropertyService propertyService;
 
     @PostMapping
-    public ResponseEntity<Property> save(@RequestBody AddPropertyRequest request) {
+    public ResponseEntity<PropertyDTO> save(@RequestBody AddPropertyRequest request) {
         Property savedProperty = propertyService.save(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedProperty);
+        return ResponseEntity.status(HttpStatus.CREATED).body(PropertyDTO.toPropertyDto(savedProperty));
     }
 
-    @DeleteMapping("/{subjectId}/{id}")
-    public ResponseEntity<Void> deleteProperty(@PathVariable Integer subjectId, @PathVariable Integer id){
-        propertyService.delete(subjectId, id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProperty(@PathVariable Integer id) {
+        propertyService.delete(id);
         return ResponseEntity.ok().build();
     }
 }
