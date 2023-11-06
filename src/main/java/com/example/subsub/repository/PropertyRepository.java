@@ -8,6 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Integer> {
-
-    void deleteBySubjectIdAndId(Integer subjectId, Integer id);
 }
