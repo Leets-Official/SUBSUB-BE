@@ -1,5 +1,6 @@
 package com.example.subsub.domain;
 
+import com.example.subsub.dto.request.AddPropertyRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +13,7 @@ public class Property {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false,nullable = false)
+    @Column(updatable = false, nullable = false)
     private Integer id;
 
     @Column(nullable = false)
@@ -22,14 +23,27 @@ public class Property {
     private String content;
 
     @Column(nullable = false)
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "subject_id")
-    private Subject subjectId;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "subjectId")
+    private Subject subject;
+
+    @Column(name = "subjectId", updatable = false)
+    private Integer subjectId;
 
     @Builder
-    private Property(LocalDateTime expiredAt, String content, Subject subjectId) {
+    private Property(LocalDateTime expiredAt, String content, Subject subject, Integer subjectId) {
         this.expiredAt = expiredAt;
         this.content = content;
+        this.subject = subject;
         this.subjectId = subjectId;
+    }
+
+    // Property의 request를 받아서 subject에 저장
+    public static Property of(AddPropertyRequest request, Subject subject){
+        return Property.builder()
+                .expiredAt(request.getExpiredAt())
+                .content(request.getContent())
+                .subject(subject)
+                .build();
     }
 }
