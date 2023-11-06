@@ -1,5 +1,4 @@
 package com.example.subsub.domain;
-
 import com.example.subsub.dto.request.AddPropertyRequest;
 import jakarta.persistence.*;
 import lombok.*;
