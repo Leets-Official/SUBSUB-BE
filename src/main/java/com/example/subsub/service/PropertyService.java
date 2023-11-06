@@ -9,6 +9,7 @@ import com.example.subsub.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,5 +27,13 @@ public class PropertyService {
 
     public void delete(Integer propertyId) {
         propertyRepository.deleteById(propertyId);
+    }
+
+    public List<Property> findAll() {
+        return propertyRepository.findAll();
+    }
+
+    public Property findById(Integer id) {
+        return propertyRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 }

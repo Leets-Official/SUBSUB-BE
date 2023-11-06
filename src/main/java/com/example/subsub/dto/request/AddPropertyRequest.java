@@ -1,6 +1,5 @@
 package com.example.subsub.dto.request;
 
-import com.example.subsub.domain.Property;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
