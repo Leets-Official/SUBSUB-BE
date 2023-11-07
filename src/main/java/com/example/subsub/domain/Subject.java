@@ -1,14 +1,19 @@
 package com.example.subsub.domain;
 
+import com.example.subsub.dto.request.AddSubjectRequest;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @AllArgsConstructor
-@Builder
 public class Subject {
 
     @Id
@@ -30,6 +35,19 @@ public class Subject {
     @Column(nullable = false)
     private String color;
 
+    @OneToMany(mappedBy = "subject")
+    private List<Property> properties;
+
     @ManyToOne
     private User user;
+
+    public static Subject from(AddSubjectRequest request){
+        Subject subject = new Subject();
+        subject.subjectName = request.getSubjectName();
+        subject.professorName = request.getProfessorName();
+        subject.date = request.getDate();
+        subject.classType = request.getClassType();
+        subject.color = request.getColor();
+        return subject;
+    }
 }

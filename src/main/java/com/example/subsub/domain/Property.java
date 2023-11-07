@@ -1,5 +1,7 @@
 package com.example.subsub.domain;
 import com.example.subsub.dto.request.AddPropertyRequest;
+import com.example.subsub.dto.request.UpdatePropertyRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,7 +24,9 @@ public class Property {
     @Column(nullable = false)
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "subjectId")
+    @JsonIgnore
     private Subject subject;
 
     public static Property of(AddPropertyRequest request, Subject subject){
@@ -31,5 +35,17 @@ public class Property {
                 .content(request.getContent())
                 .subject(subject)
                 .build();
+    }
+
+    public static Property from(AddPropertyRequest request){
+        return Property.builder()
+                .expiredAt(request.getExpiredAt())
+                .content(request.getContent())
+                .build();
+    }
+
+    public void update(UpdatePropertyRequest request){
+        this.expiredAt = request.getExpiredAt();
+        this.content = request.getContent();
     }
 }

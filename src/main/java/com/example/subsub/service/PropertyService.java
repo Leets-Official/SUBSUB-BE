@@ -2,15 +2,15 @@ package com.example.subsub.service;
 
 import com.example.subsub.domain.Property;
 import com.example.subsub.domain.Subject;
-import com.example.subsub.dto.PropertyDTO;
 import com.example.subsub.dto.request.AddPropertyRequest;
+import com.example.subsub.dto.request.UpdatePropertyRequest;
 import com.example.subsub.repository.PropertyRepository;
 import com.example.subsub.repository.SubjectRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +33,10 @@ public class PropertyService {
         return propertyRepository.findAll();
     }
 
-    public Property findById(Integer id) {
-        return propertyRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    @Transactional
+    public Property update(Integer id, UpdatePropertyRequest request) {
+        Property savedProperty = propertyRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        savedProperty.update(request);
+        return savedProperty;
     }
 }
