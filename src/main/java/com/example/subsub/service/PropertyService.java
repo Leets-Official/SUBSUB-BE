@@ -2,14 +2,15 @@ package com.example.subsub.service;
 
 import com.example.subsub.domain.Property;
 import com.example.subsub.domain.Subject;
-import com.example.subsub.dto.PropertyDTO;
 import com.example.subsub.dto.request.AddPropertyRequest;
+import com.example.subsub.dto.request.UpdatePropertyRequest;
 import com.example.subsub.repository.PropertyRepository;
 import com.example.subsub.repository.SubjectRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -26,5 +27,16 @@ public class PropertyService {
 
     public void delete(Integer propertyId) {
         propertyRepository.deleteById(propertyId);
+    }
+
+    public List<Property> findAll() {
+        return propertyRepository.findAll();
+    }
+
+    @Transactional
+    public Property update(Integer id, UpdatePropertyRequest request) {
+        Property savedProperty = propertyRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        savedProperty.update(request);
+        return savedProperty;
     }
 }
