@@ -12,4 +12,7 @@ public class AddSubjectRequest {
     private String date;
     private String classType;
     private String color;
+    private String fileName;
+    private String filePath;
+
 }

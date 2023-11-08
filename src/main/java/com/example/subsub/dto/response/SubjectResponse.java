@@ -14,6 +14,8 @@ public class SubjectResponse {
     private final String date;
     private final String classType;
     private final String color;
+    private final String fileName;
+    private final String filePath;
     private final List<PropertyResponse> properties;
 
     @Builder
@@ -23,6 +25,8 @@ public class SubjectResponse {
         date = subject.getDate();
         classType = subject.getClassType();
         color = subject.getColor();
+        fileName = subject.getFileName();
+        filePath = subject.getFilePath();
         properties = PropertyResponse.toList(subject.getProperties());
     }
 }

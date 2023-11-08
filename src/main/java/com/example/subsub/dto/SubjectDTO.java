@@ -15,6 +15,8 @@ public class SubjectDTO {
     private String date;
     private String classType;
     private String color;
+    private String fileName;
+    private String filePath;
     private List<Property> properties;
 
     public static SubjectDTO toSubjectDto(Subject subject){
@@ -25,6 +27,8 @@ public class SubjectDTO {
         subjectDTO.date = subject.getDate();
         subjectDTO.classType = subject.getClassType();
         subjectDTO.color = subject.getColor();
+        subjectDTO.fileName = subject.getFileName();
+        subjectDTO.filePath = subject.getFilePath();
         subjectDTO.properties = subject.getProperties();
         return subjectDTO;
     }

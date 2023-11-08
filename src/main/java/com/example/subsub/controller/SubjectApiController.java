@@ -30,4 +30,10 @@ public class SubjectApiController {
         Subject subject = subjectService.findById(id);
         return ResponseEntity.ok().body(new SubjectResponse(subject));
     }
+
+    @DeleteMapping("/delete/{id}")
+    public boolean subjectDelete(@PathVariable Integer id){
+        subjectService.subjectDelete(id);
+        return true;
+    }
 }
