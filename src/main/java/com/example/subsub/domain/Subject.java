@@ -2,10 +2,7 @@ package com.example.subsub.domain;
 
 import com.example.subsub.dto.request.AddSubjectRequest;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,6 +10,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Builder
 @AllArgsConstructor
 public class Subject {
 
@@ -35,11 +33,18 @@ public class Subject {
     @Column(nullable = false)
     private String color;
 
+    @Column
+    private String fileName;
+    @Column
+    private String filePath;
+
     @OneToMany(mappedBy = "subject")
     private List<Property> properties;
 
     @ManyToOne
     private User user;
+
+
 
     public static Subject from(AddSubjectRequest request){
         Subject subject = new Subject();
@@ -48,6 +53,8 @@ public class Subject {
         subject.date = request.getDate();
         subject.classType = request.getClassType();
         subject.color = request.getColor();
+        subject.fileName = request.getFileName();
+        subject.filePath = request.getFilePath();
         return subject;
     }
 }

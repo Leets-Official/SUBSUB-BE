@@ -13,4 +13,5 @@ public class AddPropertyRequest {
     private final Integer subjectId;
     private final LocalDateTime expiredAt;
     private final String content;
+
 }
