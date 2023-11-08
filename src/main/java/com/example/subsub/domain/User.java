@@ -13,7 +13,7 @@ import java.util.List;
 public class User {
 
     @Id
-    @Column(nullable = false)
+    @Column(unique = true)
     private String userId;
 
     @Column(nullable = false)
