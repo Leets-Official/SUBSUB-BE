@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SignResponse {
+    private Long id;
 
     private String userId;
 
@@ -25,6 +26,7 @@ public class SignResponse {
     private String token;
 
     public SignResponse(User user) {
+        this.id = user.getId();
         this.userId = user.getUserId();
         this.nickname = user.getNickName();
         this.roles = user.getRoles();

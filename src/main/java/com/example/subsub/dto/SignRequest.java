@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SignRequest {
+    private Long id;
 
     private String userid;
 

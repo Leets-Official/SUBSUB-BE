@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -27,22 +28,19 @@ import java.util.List;
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig{
 
     private final JwtProvider jwtProvider;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // ID, Password 문자열을 Base64로 인코딩하여 전달하는 구조
                 .httpBasic((httpBasicConfig) ->
                         httpBasicConfig.disable()
-                );
-        http       // 쿠키 기반이 아닌 JWT 기반이므로 사용하지 않음
+                )
                 .csrf((csrfConfig) ->
                         csrfConfig.disable()
-                );
-        http        // CORS 설정
+                )
                 .cors(c -> {
                             CorsConfigurationSource source = request -> {
                                 // Cors 허용 패턴
@@ -57,25 +55,19 @@ public class SecurityConfig {
                             };
                             c.configurationSource(source);
                         }
-                );
-        http        // Spring Security 세션 정책 : 세션을 생성 및 사용하지 않음
+                )
                 .sessionManagement((sessionManagement) ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                );
-        http
-                // 조건별로 요청 허용/제한 설정
+                )
                 .authorizeHttpRequests((authorizeRequests) ->
                         authorizeRequests
-//                                .requestMatchers(PathRequest.toH2Console()).permitAll()
-                                .requestMatchers("/register", "/login").permitAll()
+                                .requestMatchers("/login").permitAll()
+                                .requestMatchers("/register").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/user/**").hasRole("USER")
-                                .anyRequest().denyAll()
-                );
-                // JWT 인증 필터 적용
-        http
-                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
-        http        // 에러 핸들링
+                                .anyRequest().permitAll()
+                )
+                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling((exceptionConfig) ->
                         exceptionConfig
                                 .authenticationEntryPoint( new AuthenticationEntryPoint() {
@@ -87,8 +79,12 @@ public class SecurityConfig {
                                         response.setContentType("text/html; charset=UTF-8");
                                         response.getWriter().write("인증되지 않은 사용자입니다.");
                                     }
+
+
+
                                 }
                                 )
+
                                 .accessDeniedHandler(new AccessDeniedHandler() {
                                     @Override
                                     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
