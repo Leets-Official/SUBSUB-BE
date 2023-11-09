@@ -19,6 +19,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -35,9 +36,9 @@ public class SecurityConfig{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .httpBasic((httpBasicConfig) ->
-                        httpBasicConfig.disable()
-                )
+//                .httpBasic((httpBasicConfig) ->
+//                        httpBasicConfig.disable()
+//                )
                 .csrf((csrfConfig) ->
                         csrfConfig.disable()
                 )
@@ -59,17 +60,27 @@ public class SecurityConfig{
                 .sessionManagement((sessionManagement) ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .authorizeHttpRequests((authorizeRequests) ->
-                        authorizeRequests
-                                .requestMatchers("/login").permitAll()
-                                .requestMatchers("/register").permitAll()
-                                .requestMatchers("/admin/**").hasRole("ADMIN")
-                                .requestMatchers("/user/**").hasRole("USER")
-                                .anyRequest().permitAll()
+                .authorizeHttpRequests((authz) -> authz
+                        .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/register")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/user/**")).hasRole("USER")
+                        .anyRequest().denyAll()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling((exceptionConfig) ->
                         exceptionConfig
+                                .accessDeniedHandler(new AccessDeniedHandler() {
+                                     @Override
+                                     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
+                                         // 권한 문제가 발생했을 때 이 부분을 호출한다.
+                                         response.setStatus(403);
+                                         response.setCharacterEncoding("utf-8");
+                                         response.setContentType("text/html; charset=UTF-8");
+                                         response.getWriter().write("권한이 없는 사용자입니다.");
+                                        }
+                                }
+                                )
                                 .authenticationEntryPoint( new AuthenticationEntryPoint() {
                                     @Override
                                     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
@@ -82,18 +93,6 @@ public class SecurityConfig{
 
 
 
-                                }
-                                )
-
-                                .accessDeniedHandler(new AccessDeniedHandler() {
-                                    @Override
-                                    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-                                        // 권한 문제가 발생했을 때 이 부분을 호출한다.
-                                        response.setStatus(403);
-                                        response.setCharacterEncoding("utf-8");
-                                        response.setContentType("text/html; charset=UTF-8");
-                                        response.getWriter().write("권한이 없는 사용자입니다.");
-                                    }
                                 }
                                 )
                 );

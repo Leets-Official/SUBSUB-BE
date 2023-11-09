@@ -1,5 +1,6 @@
 package com.example.subsub.controller;
 
+import com.example.subsub.dto.RegisterResponse;
 import com.example.subsub.dto.SignRequest;
 import com.example.subsub.dto.SignResponse;
 import com.example.subsub.repository.UserRepository;
@@ -22,7 +23,7 @@ public class SignController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<Boolean> signup(@RequestBody SignRequest request) throws Exception {
+    public ResponseEntity<RegisterResponse> signup(@RequestBody SignRequest request) throws Exception {
         return new ResponseEntity<>(userService.register(request), HttpStatus.OK);
     }
 

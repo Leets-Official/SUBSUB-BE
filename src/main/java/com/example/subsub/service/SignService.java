@@ -2,6 +2,7 @@ package com.example.subsub.service;
 
 import com.example.subsub.domain.Authority;
 import com.example.subsub.domain.User;
+import com.example.subsub.dto.RegisterResponse;
 import com.example.subsub.dto.SignRequest;
 import com.example.subsub.dto.SignResponse;
 import com.example.subsub.repository.UserRepository;
@@ -26,24 +27,43 @@ public class SignService {
 
     @Transactional
     public SignResponse login(SignRequest request) throws Exception {
-        User user = userRepository.findByUserId(request.getUserid()).orElseThrow(() ->
-                new BadCredentialsException("잘못된 계정정보입니다."));
+        String messsage;
+        if (userRepository.countUserByUserId(request.getUserid())==1){
+            User user = userRepository.findByUserId(request.getUserid()).get();
 
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassWord())) {
-            throw new BadCredentialsException("잘못된 계정정보입니다.");
+            if (!passwordEncoder.matches(request.getPassword(), user.getPassWord())) {
+                messsage = "비밀 번호가 틀립니다.";
+                return SignResponse.builder()
+                        .id(null)
+                        .userId(null)
+                        .nickname(null)
+                        .roles(null)
+                        .token(null)
+                        .message(messsage)
+                        .build();
+            }
+            return SignResponse.builder()
+                    .id(user.getId())
+                    .userId(user.getUserId())
+                    .nickname(user.getNickName())
+                    .roles(user.getRoles())
+                    .token(jwtProvider.createToken(user.getUserId(), user.getRoles()))
+                    .message("로그인 성공")
+                    .build();
+        }else{
+            messsage = "계정이 존재하지 않습니다.";
+            return SignResponse.builder()
+                    .id(null)
+                    .userId(null)
+                    .nickname(null)
+                    .roles(null)
+                    .token(null)
+                    .message(messsage)
+                    .build();
         }
-
-        return SignResponse.builder()
-                .id(user.getId())
-                .userId(user.getUserId())
-                .nickname(user.getNickName())
-                .roles(user.getRoles())
-                .token(jwtProvider.createToken(user.getUserId(), user.getRoles()))
-                .build();
-
     }
     @Transactional
-    public boolean register(SignRequest request) throws Exception {
+    public RegisterResponse register(SignRequest request) throws Exception {
         try {
             User user = User.builder()
                     .userId(request.getUserid())
@@ -53,19 +73,34 @@ public class SignService {
 
             user.setRoles(Collections.singletonList(Authority.builder().name("ROLE_USER").build()));
 
-            userRepository.save(user);
+            if (userRepository.countUserByUserId(user.getUserId())==0){
+                userRepository.save(user);
+            }else{
+                return new RegisterResponse(false, "중복된 ID");
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw e;
         }
-        return true;
+        return new RegisterResponse(true, "회원가입 성공");
     }
 
     @Transactional
     public SignResponse getUser(String id) throws Exception {
-        User user = userRepository.findByUserId(id)
-                .orElseThrow(() -> new Exception("계정을 찾을 수 없습니다."));
-        return new SignResponse(user);
+        if (userRepository.countUserByUserId(id)==1){
+            User user = userRepository.findByUserId(id).get();
+            return new SignResponse(user, "계정 조회 성공");
+        }else{
+            return SignResponse.builder()
+                    .id(null)
+                    .userId(null)
+                    .nickname(null)
+                    .roles(null)
+                    .token(null)
+                    .message("계정이 존재하지 않습니다.")
+                    .build();
+        }
+
     }
 
 }

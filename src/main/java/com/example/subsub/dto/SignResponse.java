@@ -24,11 +24,14 @@ public class SignResponse {
     private List<Authority> roles = new ArrayList<>();
 
     private String token;
+    private String message;
 
-    public SignResponse(User user) {
+    public SignResponse(User user, String message) {
         this.id = user.getId();
         this.userId = user.getUserId();
         this.nickname = user.getNickName();
         this.roles = user.getRoles();
+        this.message = message;
+
     }
 }
