@@ -43,8 +43,21 @@ public class PropertyApiController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<PropertyDTO> update(@PathVariable Integer id, @RequestBody UpdatePropertyRequest request){
+    public ResponseEntity<PropertyDTO> update(@PathVariable Integer id, @RequestBody UpdatePropertyRequest request) {
         Property updatedProperty = propertyService.update(id, request);
         return ResponseEntity.ok().body(PropertyDTO.toPropertyDto(updatedProperty));
+    }
+
+    @GetMapping("/top5")
+    public ResponseEntity<List<PropertyResponse>> getTop5Properties(){
+        List<PropertyResponse> top5Properties = propertyService.getTop5PropertiesOrderedByExpiredAt()
+                .stream()
+                .map(PropertyResponse::new)
+                .toList();
+
+        if (top5Properties.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ResponseEntity.ok().body(top5Properties);
     }
 }

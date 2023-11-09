@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -12,6 +13,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class UpdatePropertyRequest {
 
-    private final LocalDateTime expiredAt;
+    private final LocalDate expiredAt;
     private final String content;
 }
