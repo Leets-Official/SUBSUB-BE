@@ -13,7 +13,10 @@ import java.util.List;
 public class User {
 
     @Id
-    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(unique = true)
     private String userId;
 
     @Column(nullable = false)
