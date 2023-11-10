@@ -52,8 +52,9 @@ public class Subject {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId")
-    @JsonIgnore
+    //@JsonIgnore
     private User user;
+
 
 //    public static Subject from(AddSubjectRequest request){
 //        Subject subject = new Subject();
@@ -66,4 +67,5 @@ public class Subject {
 //        subject.filePath = request.getFilePath();
 //        return subject;
 //    }
+
 }

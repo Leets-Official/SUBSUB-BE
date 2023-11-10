@@ -97,21 +97,14 @@ public class SubjectService {
 //        return subjectRepository.save(subject);
 //    }
 
-/*
-        String fileName = uuid + "_" + file.getOriginalFilename();
-        File saveFile = new File(projectPath, fileName);
-        file.transferTo(saveFile);
-
-        subject.getFilePath();
-        Subject.from("/files/" + fileName);
-
-        return subjectRepository.save(subject); //3.반환값을 저장한다.*/
-
-
+//    public User saveUser(User user){
+//        return userRepository.save(user);
+//    }
     public Optional<Subject> postView(Integer id){return subjectRepository.findById(id);
     }
 
     public void subjectDelete(Integer id){
+
         subjectRepository.deleteById(id);
     }
 
