@@ -1,5 +1,6 @@
 package com.example.subsub.controller;
 
+import com.example.subsub.dto.SignResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -11,9 +12,12 @@ import com.example.subsub.dto.response.SubjectResponse;
 import com.example.subsub.service.SubjectService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "메인페이지", description = "메인페이지- 과목추가 API")
 @RestController
@@ -58,6 +62,14 @@ public class SubjectApiController {
     public ResponseEntity<SubjectResponse> findById(@PathVariable Integer id) {
         Subject subject = subjectService.findById(id);
         return ResponseEntity.ok().body(new SubjectResponse(subject));
+    }
+
+
+    //모든 과목 가져오기
+    @GetMapping("/all")
+    public ResponseEntity<List<Subject>> getAllSubject(Authentication authentication) throws Exception {
+        List<Subject> savedSubject = subjectService.getAllSubject(authentication.getName());
+        return new ResponseEntity<>( savedSubject, HttpStatus.OK);
     }
     /*
     @GetMapping("/{id}")

@@ -47,6 +47,12 @@ public class SubjectService {
         return subjectRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
+    public List<Subject> getAllSubject(String userid) {
+        User user = userRepository.findByUserId(userid).get();
+
+        return subjectRepository.findAllByUser(user);
+    }
+
     //신규 코드
     public Subject write(SubjectDTO subjectDTO, MultipartFile file, User user) throws Exception {
         String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/file";
