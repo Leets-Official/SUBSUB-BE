@@ -55,57 +55,51 @@ public class SubjectService {
 
     //신규 코드
     public Subject write(SubjectDTO subjectDTO, MultipartFile file, User user) throws Exception {
+
         String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/file";
 
         UUID uuid = UUID.randomUUID();
 
-        String originalFileName = file.getOriginalFilename();
-        String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-        String fileName = uuid + fileExtension;
-
-        File saveFile = new File(projectPath, fileName);
-        file.transferTo(saveFile);
-
-        Subject subject = Subject.builder().date(subjectDTO.getDate())
-                /*.user(user)
-                .subjectId(subjectDTO.getSubjectId())
-                .subjectName(subjectDTO.getSubjectName())
-                .professorName(subjectDTO.getProfessorName())
-                .date(subjectDTO.getDate())
-                .classType(subjectDTO.getClassType())
-                .color(subjectDTO.getColor())
-                .properties(subjectDTO.getProperties())
-                .build();*/
-                .date(subjectDTO.getDate())
-                .user(user)
-                .subjectId(subjectDTO.getSubjectId())
-                .subjectName(subjectDTO.getSubjectName())
-                .professorName(subjectDTO.getProfessorName())
-                .date(subjectDTO.getDate())
-                .classType(subjectDTO.getClassType())
-                .color(subjectDTO.getColor())
-                .properties(subjectDTO.getProperties())
-                .fileName(fileName)
-                .filePath("/file/" + fileName)
-                .build();
-        return subjectRepository.save(subject);
-    }
-
-/*
         String fileName = uuid + "_" + file.getOriginalFilename();
         File saveFile = new File(projectPath, fileName);
         file.transferTo(saveFile);
 
-        subject.getFilePath();
-        Subject.from("/files/" + fileName);
-
-        return subjectRepository.save(subject); //3.반환값을 저장한다.*/
+        subjectDTO.setFileName(fileName);
+        subjectDTO.setFilePath("//files//" + fileName);
 
 
+        Subject subject = Subject.builder()//.date(subjectDTO.getDate())
+                .user(user)
+                .subjectId(subjectDTO.getSubjectId())
+                .subjectName(subjectDTO.getSubjectName())
+                .professorName(subjectDTO.getProfessorName())
+                //.date(subjectDTO.getDate())
+                .mon(subjectDTO.isMon())
+                .tue(subjectDTO.isTue())
+                .wed(subjectDTO.isWed())
+                .fri(subjectDTO.isFri())
+                .classType(subjectDTO.getClassType())
+                .color(subjectDTO.getColor())
+                .fileName(subjectDTO.getFileName())
+                .filePath(subjectDTO.getFilePath())
+
+                .properties(subjectDTO.getProperties())
+                .build();
+
+
+
+
+        return subjectRepository.save(subject);
+    }
+
+    public User saveUser(User user){
+        return userRepository.save(user);
+    }
     public Optional<Subject> postView(Integer id){return subjectRepository.findById(id);
     }
 
     public void subjectDelete(Integer id){
+
         subjectRepository.deleteById(id);
     }
 

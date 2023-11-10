@@ -27,6 +27,12 @@ public class SubjectDTO {
     @Schema(description = "과목 시간", nullable = false, example = "월요일")
     private String date;
 
+    private boolean mon;
+    private boolean tue;
+    private boolean wed;
+    private boolean thurs;
+    private boolean fri;
+
     @Schema(description = "수업 종류", nullable = false, example = "전공필수")
     private String classType;
 
@@ -47,7 +53,6 @@ public class SubjectDTO {
         subjectDTO.subjectId = subject.getSubjectId();
         subjectDTO.subjectName = subject.getSubjectName();
         subjectDTO.professorName = subject.getProfessorName();
-        subjectDTO.date = subject.getDate();
         subjectDTO.classType = subject.getClassType();
         subjectDTO.color = subject.getColor();
         subjectDTO.fileName = subject.getFileName();
