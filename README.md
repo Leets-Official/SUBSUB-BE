@@ -1,4 +1,4 @@
-# SUBSUB-BE
+# SUBSUB-BE
 zero100 2기, Todolist
 
 ## DB설계
