@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -18,7 +19,7 @@ public class PropertyDTO {
     private Integer propertyId;
 
     @Schema(description = "마감 시간", nullable = false, example = "20230115")
-    private LocalDateTime expiredAt;
+    private LocalDate expiredAt;
 
     @Schema(description = "ToDoList 내용", nullable = false, example = "팀플-인스타그램 구현하기")
     private String content;

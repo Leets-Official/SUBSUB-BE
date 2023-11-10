@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 public class AddPropertyRequest {
 
     private final Integer subjectId;
-    private final LocalDateTime expiredAt;
+    private final LocalDate expiredAt;
     private final String content;
 
 }

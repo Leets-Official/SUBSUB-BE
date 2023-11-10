@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,7 +20,7 @@ public class Property {
     private Integer propertyId;
 
     @Column(nullable = false)
-    private LocalDateTime expiredAt;
+    private LocalDate expiredAt;
 
     @Column(nullable = false)
     private String content;

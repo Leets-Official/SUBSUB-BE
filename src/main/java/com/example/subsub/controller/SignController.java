@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class SignController {
 
-    private final UserRepository userRepository;
     private final SignService userService;
 
     @PostMapping(value = "/login")

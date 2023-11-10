@@ -29,6 +29,9 @@ public class User {
     @Builder.Default
     private List<Authority> roles = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Subject> subjects;
+
     public void setRoles(List<Authority> role) {
         this.roles = role;
         role.forEach(o -> o.setUser(this));

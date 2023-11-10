@@ -39,4 +39,8 @@ public class PropertyService {
         savedProperty.update(request);
         return savedProperty;
     }
+
+    public List<Property> getTop5PropertiesOrderedByExpiredAt(){
+        return propertyRepository.findTop5ByOrderByExpiredAtAsc();
+    }
 }

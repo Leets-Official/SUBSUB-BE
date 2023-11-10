@@ -1,6 +1,7 @@
 package com.example.subsub.domain;
 
 import com.example.subsub.dto.request.AddSubjectRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -38,13 +39,13 @@ public class Subject {
     @Column
     private String filePath;
 
-    @OneToMany(mappedBy = "subject")
+    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
     private List<Property> properties;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "userId")
+    @JsonIgnore
     private User user;
-
-
 
     public static Subject from(AddSubjectRequest request){
         Subject subject = new Subject();

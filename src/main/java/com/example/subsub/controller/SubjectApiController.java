@@ -30,8 +30,7 @@ public class SubjectApiController {
 
     private final SubjectService subjectService;
 
-
-    @Operation(summary = "과목 정보입력하기", description = "과목과 관련된 정보를 입력하면 올라갑니다. ", tags = { "SubjectAPIController" })
+    @Operation(summary = "과목 정보입력하기", description = "과목과 관련된 정보를 입력하면 올라갑니다. ", tags = {"SubjectAPIController"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "입력성공",
                     content = @Content(schema = @Schema(implementation = SubjectApiController.class))),
@@ -40,7 +39,7 @@ public class SubjectApiController {
             @ApiResponse(responseCode = "500", description = "서버 오류 발생했습니다.")
     })
     @PostMapping
-    public ResponseEntity<SubjectDTO> save(@RequestBody AddSubjectRequest request){
+    public ResponseEntity<SubjectDTO> save(@RequestBody AddSubjectRequest request) {
         Subject savedSubject = subjectService.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(SubjectDTO.toSubjectDto(savedSubject));
     }
@@ -53,7 +52,7 @@ public class SubjectApiController {
     }
 */
 
-    @Operation(summary = "과목 정보 보여지기", description = "입력된 과목 정보를 확인합니다", tags = { "Subject Controller" })
+    @Operation(summary = "과목 정보 보여지기", description = "입력된 과목 정보를 확인합니다", tags = {"Subject Controller"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "입력성공",
                     content = @Content(schema = @Schema(implementation = SubjectApiController.class))),
@@ -62,7 +61,7 @@ public class SubjectApiController {
             @ApiResponse(responseCode = "500", description = "서버 오류 발생했습니다.")
     })
     @GetMapping("/{id}")
-    public ResponseEntity<SubjectResponse> findById(@PathVariable Integer id){
+    public ResponseEntity<SubjectResponse> findById(@PathVariable Integer id) {
         Subject subject = subjectService.findById(id);
         return ResponseEntity.ok().body(new SubjectResponse(subject));
     }
@@ -72,7 +71,7 @@ public class SubjectApiController {
     }
      */
 
-    @Operation(summary = "과목 정보 삭제", description = "입력된 과목 정보가 삭제됩니다.", tags = { "Subject Controller" })
+    @Operation(summary = "과목 정보 삭제", description = "입력된 과목 정보가 삭제됩니다.", tags = {"Subject Controller"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "입력성공",
                     content = @Content(schema = @Schema(implementation = SubjectApiController.class))),
@@ -81,7 +80,7 @@ public class SubjectApiController {
             @ApiResponse(responseCode = "500", description = "서버 오류 발생했습니다.")
     })
     @DeleteMapping("/delete/{id}")
-    public boolean subjectDelete(@PathVariable Integer id){
+    public boolean subjectDelete(@PathVariable Integer id) {
         subjectService.subjectDelete(id);
         return true;
     }
