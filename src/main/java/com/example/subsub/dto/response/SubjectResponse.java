@@ -11,7 +11,11 @@ public class SubjectResponse {
 
     private final String subjectName;
     private final String professorName;
-    private final String date;
+    private final boolean mon;
+    private final boolean tue;
+    private final boolean wed;
+    private final boolean thurs;
+    private final boolean fri;
     private final String classType;
     private final String color;
     private final String fileName;
@@ -22,7 +26,13 @@ public class SubjectResponse {
     public SubjectResponse(Subject subject){
         subjectName = subject.getSubjectName();
         professorName = subject.getProfessorName();
-        date = subject.getDate();
+
+        mon = subject.isMon();
+        tue = subject.isTue();
+        wed = subject.isWed();
+        thurs = subject.isThurs();
+        fri = subject.isFri();
+
         classType = subject.getClassType();
         color = subject.getColor();
         fileName = subject.getFileName();

@@ -38,19 +38,20 @@ public class SubjectApiController {
             @ApiResponse(responseCode = "404", description = "찾을 수 없습니다."),
             @ApiResponse(responseCode = "500", description = "서버 오류 발생했습니다.")
     })
+/*
     @PostMapping
     public ResponseEntity<SubjectDTO> save(@RequestBody AddSubjectRequest request) {
         Subject savedSubject = subjectService.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(SubjectDTO.toSubjectDto(savedSubject));
     }
-/*
+ */
+
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
 
     public Subject subjectWriteForm(@RequestPart SubjectDTO subjectDTO, @RequestPart MultipartFile multipartFile, @RequestPart User user) throws Exception {
-        subjectService.saveUser(user);//유저 정보 담는 함수
-        return subjectService.write(subjectDTO, multipartFile, user);
+        subjectService.saveUser(user);
+        return subjectService.write(subjectDTO, multipartFile,user);
     }
-*/
 
     @Operation(summary = "과목 정보 보여지기", description = "입력된 과목 정보를 확인합니다", tags = {"Subject Controller"})
     @ApiResponses({
@@ -60,16 +61,17 @@ public class SubjectApiController {
             @ApiResponse(responseCode = "404", description = "찾을 수 없습니다."),
             @ApiResponse(responseCode = "500", description = "서버 오류 발생했습니다.")
     })
+    /*
     @GetMapping("/{id}")
     public ResponseEntity<SubjectResponse> findById(@PathVariable Integer id) {
         Subject subject = subjectService.findById(id);
         return ResponseEntity.ok().body(new SubjectResponse(subject));
     }
-    /*
+    */
     @GetMapping("/{id}")
-    public Optional<Subject> get(@PathVariable Integer id) {return subjectService.postView(id);
+    public Optional<Subject> get(@PathVariable Integer id) {
+        return subjectService.postView(id);
     }
-     */
 
     @Operation(summary = "과목 정보 삭제", description = "입력된 과목 정보가 삭제됩니다.", tags = {"Subject Controller"})
     @ApiResponses({
@@ -79,6 +81,7 @@ public class SubjectApiController {
             @ApiResponse(responseCode = "404", description = "찾을 수 없습니다."),
             @ApiResponse(responseCode = "500", description = "서버 오류 발생했습니다.")
     })
+
     @DeleteMapping("/delete/{id}")
     public boolean subjectDelete(@PathVariable Integer id) {
         subjectService.subjectDelete(id);
