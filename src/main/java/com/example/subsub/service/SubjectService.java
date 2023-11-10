@@ -1,17 +1,21 @@
 package com.example.subsub.service;
 
+import com.example.subsub.domain.Property;
 import com.example.subsub.domain.Subject;
 import com.example.subsub.domain.User;
 import com.example.subsub.dto.SubjectDTO;
 import com.example.subsub.dto.request.AddSubjectRequest;
 import com.example.subsub.repository.SubjectRepository;
 import com.example.subsub.repository.UserRepository;
+import com.example.subsub.security.JwtProvider;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -22,12 +26,31 @@ public class SubjectService {
     private final SubjectRepository subjectRepository;
     private final UserRepository userRepository;
 
-    public Subject save(AddSubjectRequest request) {
-        return subjectRepository.save(Subject.from(request));
+
+    public Subject save(AddSubjectRequest request, String userName) {
+        User user = userRepository.findByUserId(userName).get();
+        Subject subject = Subject.builder()
+                .subjectName(request.getSubjectName())
+                .professorName(request.getProfessorName())
+                .date(request.getDate())
+                .classType(request.getClassType())
+                .color(request.getColor())
+                .fileName(request.getFileName())
+                .filePath(request.getFilePath())
+                .properties(new ArrayList<Property>())
+                .user(user)
+                .build();
+        return subjectRepository.save(subject);
     }
 
     public Subject findById(Integer id) {
         return subjectRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    }
+
+    public List<Subject> getAllSubject(String userid) {
+        User user = userRepository.findByUserId(userid).get();
+
+        return subjectRepository.findAllByUser(user);
     }
 
     //신규 코드
