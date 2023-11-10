@@ -65,7 +65,7 @@ public class SecurityConfig{
                                 .requestMatchers("/register").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/user/**").hasRole("USER")
-                                .anyRequest().denyAll()
+                                .anyRequest().permitAll()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling((exceptionConfig) ->
