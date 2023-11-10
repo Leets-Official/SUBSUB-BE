@@ -1,4 +1,4 @@
-package com.example.subsub.dto;
+package com.example.subsub.dto.response;
 
 import com.example.subsub.domain.Authority;
 import com.example.subsub.domain.User;

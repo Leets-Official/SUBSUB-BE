@@ -1,8 +1,8 @@
 package com.example.subsub.controller;
 
-import com.example.subsub.dto.RegisterResponse;
-import com.example.subsub.dto.SignRequest;
-import com.example.subsub.dto.SignResponse;
+import com.example.subsub.dto.response.RegisterResponse;
+import com.example.subsub.dto.request.SignRequest;
+import com.example.subsub.dto.response.SignResponse;
 import com.example.subsub.repository.UserRepository;
 import com.example.subsub.service.SignService;
 import lombok.RequiredArgsConstructor;

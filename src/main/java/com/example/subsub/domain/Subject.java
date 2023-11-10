@@ -32,7 +32,7 @@ public class Subject {
     @Column
     private boolean wed;
     @Column
-    private boolean thurs;
+    private boolean thu;
     @Column
     private boolean fri;
 
@@ -55,14 +55,17 @@ public class Subject {
     //@JsonIgnore
     private User user;
 
-    public static Subject from(AddSubjectRequest request){
-        Subject subject = new Subject();
-        subject.subjectName = request.getSubjectName();
-        subject.professorName = request.getProfessorName();
-        subject.classType = request.getClassType();
-        subject.color = request.getColor();
-        subject.fileName = request.getFileName();
-        subject.filePath = request.getFilePath();
-        return subject;
-    }
+
+//    public static Subject from(AddSubjectRequest request){
+//        Subject subject = new Subject();
+//        subject.subjectName = request.getSubjectName();
+//        subject.professorName = request.getProfessorName();
+//        subject.date = request.getDate();
+//        subject.classType = request.getClassType();
+//        subject.color = request.getColor();
+//        subject.fileName = request.getFileName();
+//        subject.filePath = request.getFilePath();
+//        return subject;
+//    }
+
 }
