@@ -25,8 +25,16 @@ public class Subject {
     @Column(nullable = false)
     private String professorName;
 
-    @Column(nullable = false)
-    private String date;
+    @Column
+    private boolean mon;
+    @Column
+    private boolean tue;
+    @Column
+    private boolean wed;
+    @Column
+    private boolean thu;
+    @Column
+    private boolean fri;
 
     @Column(nullable = false)
     private String classType;
@@ -47,15 +55,15 @@ public class Subject {
     @JsonIgnore
     private User user;
 
-    public static Subject from(AddSubjectRequest request){
-        Subject subject = new Subject();
-        subject.subjectName = request.getSubjectName();
-        subject.professorName = request.getProfessorName();
-        subject.date = request.getDate();
-        subject.classType = request.getClassType();
-        subject.color = request.getColor();
-        subject.fileName = request.getFileName();
-        subject.filePath = request.getFilePath();
-        return subject;
-    }
+//    public static Subject from(AddSubjectRequest request){
+//        Subject subject = new Subject();
+//        subject.subjectName = request.getSubjectName();
+//        subject.professorName = request.getProfessorName();
+//        subject.date = request.getDate();
+//        subject.classType = request.getClassType();
+//        subject.color = request.getColor();
+//        subject.fileName = request.getFileName();
+//        subject.filePath = request.getFilePath();
+//        return subject;
+//    }
 }

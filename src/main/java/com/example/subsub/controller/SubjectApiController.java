@@ -1,6 +1,5 @@
 package com.example.subsub.controller;
 
-import com.example.subsub.dto.SignResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -35,6 +34,8 @@ public class SubjectApiController {
             @ApiResponse(responseCode = "404", description = "찾을 수 없습니다."),
             @ApiResponse(responseCode = "500", description = "서버 오류 발생했습니다.")
     })
+
+    // 생성
     @PostMapping
     public SubjectResponse save(@RequestBody AddSubjectRequest request, Authentication authentication) {
         System.out.println(authentication.getName());
@@ -58,6 +59,8 @@ public class SubjectApiController {
             @ApiResponse(responseCode = "404", description = "찾을 수 없습니다."),
             @ApiResponse(responseCode = "500", description = "서버 오류 발생했습니다.")
     })
+
+    // 조회
     @GetMapping("/{id}")
     public ResponseEntity<SubjectResponse> findById(@PathVariable Integer id) {
         Subject subject = subjectService.findById(id);
@@ -65,7 +68,7 @@ public class SubjectApiController {
     }
 
 
-    //모든 과목 가져오기
+    // 모두 조회
     @GetMapping("/all")
     public ResponseEntity<List<Subject>> getAllSubject(Authentication authentication) throws Exception {
         List<Subject> savedSubject = subjectService.getAllSubject(authentication.getName());
@@ -75,7 +78,7 @@ public class SubjectApiController {
     @GetMapping("/{id}")
     public Optional<Subject> get(@PathVariable Integer id) {return subjectService.postView(id);
     }
-     */
+    */
 
     @Operation(summary = "과목 정보 삭제", description = "입력된 과목 정보가 삭제됩니다.", tags = {"Subject Controller"})
     @ApiResponses({

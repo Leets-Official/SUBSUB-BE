@@ -1,4 +1,4 @@
-package com.example.subsub.dto;
+package com.example.subsub.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;
