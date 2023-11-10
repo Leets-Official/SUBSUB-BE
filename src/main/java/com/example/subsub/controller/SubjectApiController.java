@@ -1,26 +1,19 @@
 package com.example.subsub.controller;
 
-import com.example.subsub.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import com.example.subsub.domain.Subject;
-import com.example.subsub.dto.SubjectDTO;
 import com.example.subsub.dto.request.AddSubjectRequest;
 import com.example.subsub.dto.response.SubjectResponse;
 import com.example.subsub.service.SubjectService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
-import java.util.Optional;
 
 @Tag(name = "메인페이지", description = "메인페이지- 과목추가 API")
 @RestController
@@ -39,9 +32,10 @@ public class SubjectApiController {
             @ApiResponse(responseCode = "500", description = "서버 오류 발생했습니다.")
     })
     @PostMapping
-    public ResponseEntity<SubjectDTO> save(@RequestBody AddSubjectRequest request) {
-        Subject savedSubject = subjectService.save(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(SubjectDTO.toSubjectDto(savedSubject));
+    public SubjectResponse save(@RequestBody AddSubjectRequest request, Authentication authentication) {
+        System.out.println(authentication.getName());
+        Subject savedSubject = subjectService.save(request, authentication.getName());
+        return new SubjectResponse(savedSubject);
     }
 /*
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})

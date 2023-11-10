@@ -1,6 +1,7 @@
 package com.example.subsub.dto.response;
 
 import com.example.subsub.domain.Subject;
+import com.example.subsub.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -17,6 +18,7 @@ public class SubjectResponse {
     private final String fileName;
     private final String filePath;
     private final List<PropertyResponse> properties;
+    private final String userId;
 
     @Builder
     public SubjectResponse(Subject subject){
@@ -28,5 +30,6 @@ public class SubjectResponse {
         fileName = subject.getFileName();
         filePath = subject.getFilePath();
         properties = PropertyResponse.toList(subject.getProperties());
+        userId = subject.getUser().getUserId();
     }
 }
