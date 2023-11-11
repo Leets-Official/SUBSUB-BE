@@ -45,7 +45,5 @@ public class SubjectDTO {
     @Schema(description = "파일 경로", nullable = false, example = "C:\\Users\\바탕 화면\\배경화면")
     private String filePath;
 
-
     private List<Property> properties;
-
 }

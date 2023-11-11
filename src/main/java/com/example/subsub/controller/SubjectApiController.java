@@ -62,10 +62,13 @@ public class SubjectApiController {
     }
 
     // 모두 조회
-     @GetMapping("/all") // postman 확인 안됨.
-    public ResponseEntity<List<Subject>> getAllSubject(Authentication authentication) throws Exception {
-        List<Subject> savedSubject = subjectService.getAllSubject(authentication.getName());
-        return new ResponseEntity<>( savedSubject, HttpStatus.OK);
+     @GetMapping("/all")
+    public ResponseEntity<List<SubjectResponse>> getAllSubject(Authentication authentication) throws Exception {
+         List<SubjectResponse> savedSubject = subjectService.getAllSubject(authentication.getName())
+                 .stream()
+                 .map(SubjectResponse::new)
+                 .toList();
+         return ResponseEntity.ok().body(savedSubject);
     }
 
     //삭제

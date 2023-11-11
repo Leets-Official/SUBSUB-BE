@@ -24,6 +24,9 @@ public class Property {
     @Column(nullable = false)
     private String content;
 
+    @Column
+    private Boolean isCompleted;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subjectId")
     @JsonIgnore
@@ -33,19 +36,14 @@ public class Property {
         return Property.builder()
                 .expiredAt(request.getExpiredAt())
                 .content(request.getContent())
+                .isCompleted(request.getIsCompleted())
                 .subject(subject)
-                .build();
-    }
-
-    public static Property from(AddPropertyRequest request){
-        return Property.builder()
-                .expiredAt(request.getExpiredAt())
-                .content(request.getContent())
                 .build();
     }
 
     public void update(UpdatePropertyRequest request){
         this.expiredAt = request.getExpiredAt();
         this.content = request.getContent();
+        this.isCompleted = request.getIsCompleted();
     }
 }
