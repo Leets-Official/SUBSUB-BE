@@ -1,14 +1,18 @@
 package com.example.subsub.controller;
 
+
 import com.example.subsub.dto.response.RegisterResponse;
 import com.example.subsub.dto.request.SignRequest;
 import com.example.subsub.dto.response.SignResponse;
 import com.example.subsub.repository.UserRepository;
 import com.example.subsub.service.SignService;
+import com.example.subsub.service.SubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,6 +20,7 @@ public class SignController {
 
     private final UserRepository userRepository;
     private final SignService userService;
+    private final SubjectService subjectService;
 
     @PostMapping(value = "/login")
     public ResponseEntity<SignResponse> signin(@RequestBody SignRequest request) throws Exception {
@@ -36,4 +41,5 @@ public class SignController {
     public ResponseEntity<SignResponse> getUserForAdmin(@RequestParam String id) throws Exception {
         return new ResponseEntity<>( userService.getUser(id), HttpStatus.OK);
     }
+
 }

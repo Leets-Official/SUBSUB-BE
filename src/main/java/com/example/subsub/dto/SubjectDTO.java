@@ -48,18 +48,4 @@ public class SubjectDTO {
 
     private List<Property> properties;
 
-//    public static SubjectDTO toSubjectDto(Subject subject){
-//        SubjectDTO subjectDTO = new SubjectDTO();
-//        subjectDTO.subjectId = subject.getSubjectId();
-//        subjectDTO.subjectName = subject.getSubjectName();
-//        subjectDTO.professorName = subject.getProfessorName();
-//        subjectDTO.date = subject.getDate();
-//        subjectDTO.classType = subject.getClassType();
-//        subjectDTO.color = subject.getColor();
-//        subjectDTO.fileName = subject.getFileName();
-//        subjectDTO.filePath = subject.getFilePath();
-//        subjectDTO.properties = subject.getProperties();
-//        return subjectDTO;
-//    }
-
 }

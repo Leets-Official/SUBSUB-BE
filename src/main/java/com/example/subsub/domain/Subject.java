@@ -1,6 +1,5 @@
 package com.example.subsub.domain;
 
-import com.example.subsub.dto.request.AddSubjectRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -52,7 +51,7 @@ public class Subject {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId")
-    //@JsonIgnore
+    @JsonIgnore
     private User user;
 
 
