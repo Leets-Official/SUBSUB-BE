@@ -1,5 +1,6 @@
 package com.example.subsub.controller;
 
+import com.example.subsub.dto.response.PropertyResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

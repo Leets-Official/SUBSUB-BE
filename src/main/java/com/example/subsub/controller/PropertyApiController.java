@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +23,8 @@ public class PropertyApiController {
     private final PropertyService propertyService;
 
     @PostMapping
-    public ResponseEntity<PropertyDTO> save(@RequestBody AddPropertyRequest request) {
-        Property savedProperty = propertyService.save(request);
+    public ResponseEntity<PropertyDTO> save(@RequestPart AddPropertyRequest request, Authentication authentication) {
+        Property savedProperty = propertyService.save(request, authentication.getName());
         return ResponseEntity.status(HttpStatus.CREATED).body(PropertyDTO.toPropertyDto(savedProperty));
     }
 
@@ -33,9 +34,9 @@ public class PropertyApiController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping
-    public ResponseEntity<List<PropertyResponse>> findAll() {
-        List<PropertyResponse> properties = propertyService.findAll()
+    @GetMapping("/{id}")
+    public ResponseEntity<List<PropertyResponse>> findBySubjectId(@PathVariable Integer id) {
+        List<PropertyResponse> properties = propertyService.findBySubjectId(id)
                 .stream()
                 .map(PropertyResponse::new)
                 .toList();
@@ -50,8 +51,8 @@ public class PropertyApiController {
     }
 
     @GetMapping("/top5")
-    public ResponseEntity<List<PropertyResponse>> getTop5Properties(){
-        List<PropertyResponse> top5Properties = propertyService.getTop5PropertiesOrderedByExpiredAt()
+    public ResponseEntity<List<PropertyResponse>> getTop5Properties(Authentication authentication){
+        List<PropertyResponse> top5Properties = propertyService.getTop5PropertiesOrderedByExpiredAt(authentication.getName())
                 .stream()
                 .map(PropertyResponse::new)
                 .toList();

@@ -10,5 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Integer> {
-    List<Property> findTop5ByOrderByExpiredAtAsc();
+    List<Property> findTop5ByUserOrderByExpiredAtAsc(User user);
+
+    List<Property> findBySubjectSubjectId(Integer subject_subjectId);
 }
