@@ -38,6 +38,7 @@ public class SignService {
                         .nickname(null)
                         .roles(null)
                         .token(null)
+                        .result(false)
                         .message(messsage)
                         .build();
             }
@@ -47,6 +48,7 @@ public class SignService {
                     .nickname(user.getNickName())
                     .roles(user.getRoles())
                     .token(jwtProvider.createToken(user.getUserId(), user.getRoles()))
+                    .result(true)
                     .message("로그인 성공")
                     .build();
         }else{
@@ -57,6 +59,7 @@ public class SignService {
                     .nickname(null)
                     .roles(null)
                     .token(null)
+                    .result(false)
                     .message(messsage)
                     .build();
         }
@@ -88,7 +91,7 @@ public class SignService {
     public SignResponse getUser(String id) throws Exception {
         if (userRepository.countUserByUserId(id)==1){
             User user = userRepository.findByUserId(id).get();
-            return new SignResponse(user, "계정 조회 성공");
+            return new SignResponse(user, true,"계정 조회 성공");
         }else{
             return SignResponse.builder()
                     .id(null)

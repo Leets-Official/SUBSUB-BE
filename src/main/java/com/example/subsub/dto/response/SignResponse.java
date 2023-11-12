@@ -24,13 +24,15 @@ public class SignResponse {
     private List<Authority> roles = new ArrayList<>();
 
     private String token;
+    private Boolean result;
     private String message;
 
-    public SignResponse(User user, String message) {
+    public SignResponse(User user, Boolean result, String message) {
         this.id = user.getId();
         this.userId = user.getUserId();
         this.nickname = user.getNickName();
         this.roles = user.getRoles();
+        this.result = result;
         this.message = message;
 
     }
