@@ -29,7 +29,7 @@ public class User {
     @Builder.Default
     private List<Authority> roles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Subject> subjects;
 
     public void setRoles(List<Authority> role) {

@@ -18,28 +18,7 @@ public class SubjectService {
 
     private final SubjectRepository subjectRepository;
     private final UserRepository userRepository;
-/*
-    // 생성
-   public Subject save(AddSubjectRequest request, String userName) {
-        User user = userRepository.findByUserId(userName).get();
-        Subject subject = Subject.builder()
-                .subjectName(request.getSubjectName())
-                .professorName(request.getProfessorName())
-                .mon(request.isMon())
-                .tue(request.isTue())
-                .wed(request.isWed())
-                .thu(request.isThu())
-                .fri(request.isFri())
-                .classType(request.getClassType())
-                .color(request.getColor())
-                .fileName(request.getFileName())
-                .filePath(request.getFilePath())
-                .user(user)
-                .build();
-        return subjectRepository.save(subject);
-    }
 
-*/
     public Subject writesave(AddSubjectRequest request, MultipartFile file, String userName) throws Exception {
             User user = userRepository.findByUserId(userName).get();
 
@@ -74,13 +53,11 @@ public class SubjectService {
 
     // 모두 조회
     public List<Subject> getAllSubject(String userid) {
-        User user = userRepository.findByUserId(userid).get();
-
+        User user = userRepository.findByUserId(userid).orElseThrow(IllegalArgumentException::new);
         return subjectRepository.findAllByUser(user);
     }
 
     public void subjectDelete(Integer id){
-
         subjectRepository.deleteById(id);
     }
 

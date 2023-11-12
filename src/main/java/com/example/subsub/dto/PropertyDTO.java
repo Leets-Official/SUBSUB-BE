@@ -24,6 +24,8 @@ public class PropertyDTO {
     @Schema(description = "ToDoList 내용", nullable = false, example = "팀플-인스타그램 구현하기")
     private String content;
 
+    private Boolean isCompleted;
+
     @Schema(description = "과목 이름-자동생성")
     private Subject subject;
 
@@ -33,6 +35,7 @@ public class PropertyDTO {
         propertyDTO.expiredAt = property.getExpiredAt();
         propertyDTO.content = property.getContent();
         propertyDTO.subject = property.getSubject();
+        propertyDTO.isCompleted = property.getIsCompleted();
         return propertyDTO;
     }
 }

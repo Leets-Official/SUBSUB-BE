@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 public class SubjectResponse {
 
-    private final int subjectid;
+    private final Integer subjectId;
     private final String subjectName;
     private final String professorName;
     private final boolean mon;
@@ -23,13 +23,12 @@ public class SubjectResponse {
     private final String color;
     private final String fileName;
     private final String filePath;
-//    private final List<PropertyResponse> properties;
     private final List<Property> properties;
     private final String userId;
 
     @Builder
     public SubjectResponse(Subject subject){
-        subjectid = subject.getSubjectId();
+        subjectId = subject.getSubjectId();
         subjectName = subject.getSubjectName();
         professorName = subject.getProfessorName();
         mon = subject.isMon();
@@ -41,8 +40,7 @@ public class SubjectResponse {
         color = subject.getColor();
         fileName = subject.getFileName();
         filePath = subject.getFilePath();
-//        properties = PropertyResponse.toList(subject.getProperties());
-        properties = getProperties();
+        properties = subject.getProperties();
         userId = subject.getUser().getUserId();
     }
 }

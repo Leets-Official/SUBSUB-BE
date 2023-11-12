@@ -46,25 +46,12 @@ public class Subject {
     @Column
     private String filePath;
 
-    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "subject", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Property> properties;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId")
     @JsonIgnore
     private User user;
-
-
-//    public static Subject from(AddSubjectRequest request){
-//        Subject subject = new Subject();
-//        subject.subjectName = request.getSubjectName();
-//        subject.professorName = request.getProfessorName();
-//        subject.date = request.getDate();
-//        subject.classType = request.getClassType();
-//        subject.color = request.getColor();
-//        subject.fileName = request.getFileName();
-//        subject.filePath = request.getFilePath();
-//        return subject;
-//    }
 
 }

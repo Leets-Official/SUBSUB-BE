@@ -12,15 +12,11 @@ public class PropertyResponse {
 
     private final LocalDate expiredAt;
     private final String content;
+    private final Boolean isCompleted;
 
     public PropertyResponse(Property property){
         this.expiredAt = property.getExpiredAt();
         this.content = property.getContent();
-    }
-
-    public static List<PropertyResponse> toList(List<Property> property){
-        return property.stream()
-                .map(PropertyResponse::new)
-                .toList();
+        this.isCompleted = property.getIsCompleted();
     }
 }

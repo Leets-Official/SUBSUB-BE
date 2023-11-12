@@ -25,6 +25,7 @@ public class PropertyService {
         return propertyRepository.save(property);
     }
 
+    @Transactional
     public void delete(Integer propertyId) {
         propertyRepository.deleteById(propertyId);
     }

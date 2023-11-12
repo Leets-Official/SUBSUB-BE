@@ -18,9 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SignController {
 
-    private final UserRepository userRepository;
     private final SignService userService;
-    private final SubjectService subjectService;
 
     @PostMapping(value = "/login")
     public ResponseEntity<SignResponse> signin(@RequestBody SignRequest request) throws Exception {
