@@ -1,9 +1,11 @@
 package com.example.subsub.service;
 
 
+import com.example.subsub.domain.Property;
 import com.example.subsub.domain.Subject;
 import com.example.subsub.domain.User;
 import com.example.subsub.dto.request.AddSubjectRequest;
+import com.example.subsub.dto.response.PropertyResponse;
 import com.example.subsub.repository.SubjectRepository;
 import com.example.subsub.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -52,13 +54,12 @@ public class SubjectService {
     }
 
     // 모두 조회
-    public List<Subject> getAllSubject(String userid) {
-        User user = userRepository.findByUserId(userid).orElseThrow(IllegalArgumentException::new);
+    public List<Subject> getAllSubject(String userId) {
+        User user = userRepository.findByUserId(userId).orElseThrow(IllegalArgumentException::new);
         return subjectRepository.findAllByUser(user);
     }
 
     public void subjectDelete(Integer id){
         subjectRepository.deleteById(id);
     }
-
 }
