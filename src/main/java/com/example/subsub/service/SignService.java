@@ -2,13 +2,12 @@ package com.example.subsub.service;
 
 import com.example.subsub.domain.Authority;
 import com.example.subsub.domain.User;
-import com.example.subsub.dto.response.RegisterResponse;
 import com.example.subsub.dto.request.SignRequest;
+import com.example.subsub.dto.response.RegisterResponse;
 import com.example.subsub.dto.response.SignResponse;
 import com.example.subsub.repository.UserRepository;
 import com.example.subsub.security.JwtProvider;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;

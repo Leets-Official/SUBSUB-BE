@@ -1,10 +1,8 @@
 package com.example.subsub.dto;
 
 import com.example.subsub.domain.Property;
-import com.example.subsub.domain.Subject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.Getter;
 

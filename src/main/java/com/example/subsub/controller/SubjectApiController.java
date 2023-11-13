@@ -1,18 +1,17 @@
 package com.example.subsub.controller;
 
-import com.example.subsub.dto.response.PropertyResponse;
+import com.example.subsub.domain.Subject;
+import com.example.subsub.dto.request.AddSubjectRequest;
+import com.example.subsub.dto.response.SubjectNameAndColorRes;
+import com.example.subsub.dto.response.SubjectResponse;
+import com.example.subsub.service.SubjectService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import com.example.subsub.domain.Subject;
-import com.example.subsub.dto.request.AddSubjectRequest;
-import com.example.subsub.dto.response.SubjectResponse;
-import com.example.subsub.service.SubjectService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -62,14 +61,14 @@ public class SubjectApiController {
         return ResponseEntity.ok().body(new SubjectResponse(subject));
     }
 
-    // 모두 조회
-     @GetMapping("/all")
-    public ResponseEntity<List<SubjectResponse>> getAllSubject(Authentication authentication) throws Exception {
-         List<SubjectResponse> savedSubject = subjectService.getAllSubject(authentication.getName())
-                 .stream()
-                 .map(SubjectResponse::new)
-                 .toList();
-         return ResponseEntity.ok().body(savedSubject);
+    //각 유저의 모든-과목이름 출력
+    @GetMapping("/main")
+    public ResponseEntity<List<SubjectNameAndColorRes>> getSubjectNameAndColor(Authentication authentication) {
+        List<SubjectNameAndColorRes> subjectNameAndColors = subjectService.getAllSubject(authentication.getName())
+                .stream()
+                .map(SubjectNameAndColorRes::new)
+                .toList();
+        return ResponseEntity.ok().body(subjectNameAndColors);
     }
 
     //삭제

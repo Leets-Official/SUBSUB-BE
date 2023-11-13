@@ -35,7 +35,7 @@ public class PropertyService {
     }
 
     public List<Property> findBySubjectId(Integer subjectId) {
-        return propertyRepository.findBySubjectSubjectId(subjectId);
+        return propertyRepository.findBySubjectSubjectIdOrderByExpiredAtAsc(subjectId);
     }
 
     @Transactional

@@ -1,16 +1,15 @@
 package com.example.subsub.service;
 
 
-import com.example.subsub.domain.Property;
 import com.example.subsub.domain.Subject;
 import com.example.subsub.domain.User;
 import com.example.subsub.dto.request.AddSubjectRequest;
-import com.example.subsub.dto.response.PropertyResponse;
 import com.example.subsub.repository.SubjectRepository;
 import com.example.subsub.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.File;
 import java.util.List;
 
