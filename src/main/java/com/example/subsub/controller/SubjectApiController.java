@@ -72,6 +72,18 @@ public class SubjectApiController {
          return ResponseEntity.ok().body(savedSubject);
     }
 
+    //각 유저의 모든-과목이름 출력
+    @GetMapping("/allsubject/{userid}")
+    public ResponseEntity<List<String>> getAllSubjectNames(@PathVariable String userid) {
+        try {
+            List<String> subjectNames = subjectService.getAllSubjectNames(userid);
+            return new ResponseEntity<>(subjectNames, HttpStatus.OK);
+        } catch (Exception e) {
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     //삭제
     @Operation(summary = "과목 정보 삭제", description = "입력된 과목 정보가 삭제됩니다.", tags = {"Subject Controller"})
     @ApiResponses({

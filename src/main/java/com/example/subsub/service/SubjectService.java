@@ -59,6 +59,14 @@ public class SubjectService {
         return subjectRepository.findAllByUser(user);
     }
 
+    //유저의 해당 과목이름 모두 출력
+    public List<String> getAllSubjectNames(String userid) {
+        User user = userRepository.findByUserId(userid).orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        List<String> subjectNames = subjectRepository.findAllSubjectNamesByUser(user);
+        return subjectNames;
+    }
+
     public void subjectDelete(Integer id){
         subjectRepository.deleteById(id);
     }
