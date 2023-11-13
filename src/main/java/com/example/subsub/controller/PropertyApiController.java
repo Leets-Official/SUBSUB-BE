@@ -23,7 +23,7 @@ public class PropertyApiController {
     private final PropertyService propertyService;
 
     @PostMapping
-    public ResponseEntity<PropertyDTO> save(@RequestPart AddPropertyRequest request, Authentication authentication) {
+    public ResponseEntity<PropertyDTO> save(@RequestBody AddPropertyRequest request, Authentication authentication) {
         Property savedProperty = propertyService.save(request, authentication.getName());
         return ResponseEntity.status(HttpStatus.CREATED).body(PropertyDTO.toPropertyDto(savedProperty));
     }
