@@ -19,7 +19,6 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-src/main/resources/*.properties
 .idea
 *.iws
 *.iml
