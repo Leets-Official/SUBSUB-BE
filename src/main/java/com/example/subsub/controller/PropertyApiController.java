@@ -6,7 +6,6 @@ import com.example.subsub.dto.request.AddPropertyRequest;
 import com.example.subsub.dto.request.UpdatePropertyRequest;
 import com.example.subsub.dto.response.PropertyResponse;
 import com.example.subsub.service.PropertyService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +39,6 @@ public class PropertyApiController {
                 .stream()
                 .map(PropertyResponse::new)
                 .toList();
-
         return ResponseEntity.ok().body(properties);
     }
 
