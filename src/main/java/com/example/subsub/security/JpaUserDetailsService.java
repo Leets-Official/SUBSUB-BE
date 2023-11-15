@@ -2,7 +2,7 @@ package com.example.subsub.security;
 
 import com.example.subsub.domain.User;
 import com.example.subsub.repository.UserRepository;
-import lombok.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
