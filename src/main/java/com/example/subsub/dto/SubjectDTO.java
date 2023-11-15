@@ -7,11 +7,13 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
 @Data
+@NoArgsConstructor
 public class SubjectDTO {
 
     @NotNull(message = "subjectId cannot be null")
@@ -23,9 +25,6 @@ public class SubjectDTO {
 
     @Schema(description = "교수님 성함", nullable = false, example = "최아영교수님")
     private String professorName;
-
-    @Schema(description = "과목 시간", nullable = false, example = "월요일")
-    private String date;
 
     private boolean mon;
     private boolean tue;
@@ -39,11 +38,20 @@ public class SubjectDTO {
     @Schema(description = "과목 고유 색상", nullable = false, example = "#FFFFFF")
     private String color;
 
-    @Schema(description = "파일명", nullable = false, example = "픽토그램.png")
-    private String fileName;
-
-    @Schema(description = "파일 경로", nullable = false, example = "C:\\Users\\바탕 화면\\배경화면")
-    private String filePath;
-
     private List<Property> properties;
+
+    public static SubjectDTO toSubjectDto(Subject subject){
+        SubjectDTO subjectDTO = new SubjectDTO();
+        subjectDTO.subjectName = subject.getSubjectName();
+        subjectDTO.professorName = subject.getProfessorName();
+        subjectDTO.classType = subject.getClassType();
+        subjectDTO.color = subject.getColor();
+        subjectDTO.mon = subject.isMon();
+        subjectDTO.tue = subject.isTue();
+        subjectDTO.wed = subject.isWed();
+        subjectDTO.fri = subject.isFri();
+
+
+        return subjectDTO;
+    }
 }

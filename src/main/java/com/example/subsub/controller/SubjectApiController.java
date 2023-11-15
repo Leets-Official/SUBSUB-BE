@@ -11,12 +11,9 @@ import com.example.subsub.dto.response.SubjectResponse;
 import com.example.subsub.service.SubjectService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -38,12 +35,13 @@ public class SubjectApiController {
             @ApiResponse(responseCode = "500", description = "서버 오류 발생했습니다.")
     })
 
-    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public SubjectResponse writesave(@RequestPart AddSubjectRequest request, @RequestPart MultipartFile multipartFile, Authentication authentication) throws Exception{
+    @PostMapping
+    public SubjectResponse writesave(@RequestBody AddSubjectRequest request, Authentication authentication) throws Exception{
         System.out.println(authentication.getName());
-        Subject savedSubject = subjectService.writesave(request, multipartFile, authentication.getName());
+        Subject savedSubject = subjectService.writesave(request, authentication.getName());
         return new SubjectResponse(savedSubject);
     }
+
 
      // 조회
     @Operation(summary = "과목 정보 조회", description = "입력된 과목 정보를 확인합니다", tags = {"Subject Controller"})

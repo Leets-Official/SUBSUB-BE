@@ -16,6 +16,4 @@ public class AddSubjectRequest {
     private boolean fri;
     private String classType;
     private String color;
-    private String fileName;
-    private String filePath;
 }
