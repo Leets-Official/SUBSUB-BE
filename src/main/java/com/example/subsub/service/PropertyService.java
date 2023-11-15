@@ -2,10 +2,12 @@ package com.example.subsub.service;
 
 import com.example.subsub.domain.Property;
 import com.example.subsub.domain.Subject;
+import com.example.subsub.domain.User;
 import com.example.subsub.dto.request.AddPropertyRequest;
 import com.example.subsub.dto.request.UpdatePropertyRequest;
 import com.example.subsub.repository.PropertyRepository;
 import com.example.subsub.repository.SubjectRepository;
+import com.example.subsub.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,12 +18,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PropertyService {
 
+    private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
     private final PropertyRepository propertyRepository;
 
-    public Property save(AddPropertyRequest request) {
+    public Property save(AddPropertyRequest request, String userName) {
         Subject subjectEntity = subjectRepository.findById(request.getSubjectId()).orElseThrow(IllegalArgumentException::new);
-        Property property = Property.of(request, subjectEntity);
+        User user = userRepository.findByUserId(userName).orElseThrow(IllegalArgumentException::new);
+        Property property = Property.of(request, subjectEntity, user);
         return propertyRepository.save(property);
     }
 
@@ -30,8 +34,8 @@ public class PropertyService {
         propertyRepository.deleteById(propertyId);
     }
 
-    public List<Property> findAll() {
-        return propertyRepository.findAll();
+    public List<Property> findBySubjectId(Integer subjectId) {
+        return propertyRepository.findBySubjectSubjectIdOrderByExpiredAtAsc(subjectId);
     }
 
     @Transactional
@@ -41,7 +45,9 @@ public class PropertyService {
         return savedProperty;
     }
 
-    public List<Property> getTop5PropertiesOrderedByExpiredAt(){
-        return propertyRepository.findTop5ByOrderByExpiredAtAsc();
+    @Transactional
+    public List<Property> getTop5PropertiesOrderedByExpiredAt(String userId){
+        User user = userRepository.findByUserId(userId).orElseThrow(IllegalArgumentException::new);
+        return propertyRepository.findTop5ByUserOrderByExpiredAtAsc(user);
     }
 }

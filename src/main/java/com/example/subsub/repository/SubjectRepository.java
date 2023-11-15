@@ -11,6 +11,4 @@ import java.util.Optional;
 @Repository
 public interface SubjectRepository extends JpaRepository<Subject, Integer> {
     List<Subject> findAllByUser(User user);
-    Optional<Subject> findBySubjectId(Integer subjectId);
-
 }

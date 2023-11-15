@@ -10,32 +10,33 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/property")
+@RequestMapping("/property")
 @RequiredArgsConstructor
 public class PropertyApiController {
 
     private final PropertyService propertyService;
 
     @PostMapping
-    public ResponseEntity<PropertyDTO> save(@RequestBody AddPropertyRequest request) {
-        Property savedProperty = propertyService.save(request);
+    public ResponseEntity<PropertyDTO> save(@RequestBody AddPropertyRequest request, Authentication authentication) {
+        Property savedProperty = propertyService.save(request, authentication.getName());
         return ResponseEntity.status(HttpStatus.CREATED).body(PropertyDTO.toPropertyDto(savedProperty));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteProperty(@PathVariable Integer id) {
         propertyService.delete(id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping
-    public ResponseEntity<List<PropertyResponse>> findAll() {
-        List<PropertyResponse> properties = propertyService.findAll()
+    @GetMapping("/{id}")
+    public ResponseEntity<List<PropertyResponse>> findBySubjectId(@PathVariable Integer id) {
+        List<PropertyResponse> properties = propertyService.findBySubjectId(id)
                 .stream()
                 .map(PropertyResponse::new)
                 .toList();
@@ -43,15 +44,15 @@ public class PropertyApiController {
         return ResponseEntity.ok().body(properties);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/update/{id}")
     public ResponseEntity<PropertyDTO> update(@PathVariable Integer id, @RequestBody UpdatePropertyRequest request) {
         Property updatedProperty = propertyService.update(id, request);
         return ResponseEntity.ok().body(PropertyDTO.toPropertyDto(updatedProperty));
     }
 
-    @GetMapping("/top5")
-    public ResponseEntity<List<PropertyResponse>> getTop5Properties(){
-        List<PropertyResponse> top5Properties = propertyService.getTop5PropertiesOrderedByExpiredAt()
+    @GetMapping("/top")
+    public ResponseEntity<List<PropertyResponse>> getTop5Properties(Authentication authentication){
+        List<PropertyResponse> top5Properties = propertyService.getTop5PropertiesOrderedByExpiredAt(authentication.getName())
                 .stream()
                 .map(PropertyResponse::new)
                 .toList();

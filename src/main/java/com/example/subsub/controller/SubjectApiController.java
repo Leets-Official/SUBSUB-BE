@@ -1,5 +1,6 @@
 package com.example.subsub.controller;
 
+import com.example.subsub.dto.response.PropertyResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -37,7 +38,6 @@ public class SubjectApiController {
 
     @PostMapping
     public SubjectResponse writesave(@RequestBody AddSubjectRequest request, Authentication authentication) throws Exception{
-        System.out.println(authentication.getName());
         Subject savedSubject = subjectService.writesave(request, authentication.getName());
         return new SubjectResponse(savedSubject);
     }

@@ -32,12 +32,18 @@ public class Property {
     @JsonIgnore
     private Subject subject;
 
-    public static Property of(AddPropertyRequest request, Subject subject){
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "userId")
+    @JsonIgnore
+    private User user;
+
+    public static Property of(AddPropertyRequest request, Subject subject, User user){
         return Property.builder()
                 .expiredAt(request.getExpiredAt())
                 .content(request.getContent())
                 .isCompleted(request.getIsCompleted())
                 .subject(subject)
+                .user(user)
                 .build();
     }
 
