@@ -41,11 +41,6 @@ public class Subject {
     @Column(nullable = false)
     private String color;
 
-    @Column
-    private String fileName;
-    @Column
-    private String filePath;
-
     @OneToMany(mappedBy = "subject", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Property> properties;
 

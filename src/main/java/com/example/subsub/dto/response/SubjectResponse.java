@@ -21,8 +21,6 @@ public class SubjectResponse {
     private final boolean fri;
     private final String classType;
     private final String color;
-    private final String fileName;
-    private final String filePath;
     private final List<Property> properties;
     private final String userId;
 
@@ -38,8 +36,6 @@ public class SubjectResponse {
         fri = subject.isFri();
         classType = subject.getClassType();
         color = subject.getColor();
-        fileName = subject.getFileName();
-        filePath = subject.getFilePath();
         properties = subject.getProperties();
         userId = subject.getUser().getUserId();
     }
