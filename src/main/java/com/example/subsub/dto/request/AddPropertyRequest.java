@@ -9,10 +9,9 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 public class AddPropertyRequest {
-
     private final Integer subjectId;
     private final LocalDate expiredAt;
     private final String content;
-    private final Boolean isCompleted;
+    private final Boolean isCompleted = false;
 
 }
