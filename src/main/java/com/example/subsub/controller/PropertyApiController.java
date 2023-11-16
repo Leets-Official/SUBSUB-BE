@@ -54,10 +54,6 @@ public class PropertyApiController {
                 .stream()
                 .map(PropertyResponse::new)
                 .toList();
-
-        if (top5Properties.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
         return ResponseEntity.ok().body(top5Properties);
     }
 }
