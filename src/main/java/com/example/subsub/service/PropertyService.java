@@ -41,6 +41,7 @@ public class PropertyService {
     @Transactional
     public Property update(Integer id, UpdatePropertyRequest request) {
         Property savedProperty = propertyRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+
         savedProperty.update(request);
         return savedProperty;
     }
