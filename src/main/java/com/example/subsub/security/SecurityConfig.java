@@ -56,7 +56,7 @@ public class SecurityConfig{
                                 .requestMatchers("/user/**").hasRole("USER")
                                 .requestMatchers("/subject/**").hasRole("USER")
                                 .requestMatchers("/property/**").hasRole("USER")
-                                .anyRequest().denyAll()
+                                .anyRequest().permitAll()
                 )
                 .addFilterBefore(new CustomCorsFilter(), CorsFilter.class)
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
