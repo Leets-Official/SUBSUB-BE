@@ -49,6 +49,6 @@ public class PropertyService {
     @Transactional
     public List<Property> getTop5PropertiesOrderedByExpiredAt(String userId){
         User user = userRepository.findByUserId(userId).orElseThrow(IllegalArgumentException::new);
-        return propertyRepository.findTop5ByUserOrderByExpiredAtAsc(user);
+        return propertyRepository.findTop5ByUserAndIsCompletedOrderByExpiredAtAsc(user, false);
     }
 }
