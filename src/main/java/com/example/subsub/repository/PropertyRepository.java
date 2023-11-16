@@ -11,5 +11,5 @@ import java.util.List;
 public interface PropertyRepository extends JpaRepository<Property, Integer> {
     List<Property> findTop5ByUserOrderByExpiredAtAsc(User user);
 
-    List<Property> findBySubjectSubjectIdOrderByExpiredAtAsc(Integer subject_subjectId);
+    List<Property> findBySubjectSubjectIdOrderByIsCompletedAscExpiredAtAsc(Integer subject_subjectId);
 }
