@@ -2,6 +2,7 @@
 <div align="center">
 <img width="470" alt="Screenshot 2023-11-17 at 4 22 22 PM" src="https://github.com/Leets-Official/SUBSUB-BE/assets/136783693/d4f84783-f9c9-4dc0-bd13-bb0476b839f4">
 </div>
+
 ## SUBSUB 프로젝트 소개
 > Leets zero100 2기, 토이 프로젝트
 > 대학생을 위한 강의구분 투두 리스트
