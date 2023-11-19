@@ -18,32 +18,29 @@ public class SubjectService {
     private final SubjectRepository subjectRepository;
     private final UserRepository userRepository;
 
-    public Subject writesave(AddSubjectRequest request, String userName) throws Exception {
-            User user = userRepository.findByUserId(userName).get();
+    public Subject writeSave(AddSubjectRequest request, String userName) throws Exception {
+        User user = userRepository.findByUserId(userName).get();
 
-            Subject subject = Subject.builder()
-                    .subjectName(request.getSubjectName())
-                    .professorName(request.getProfessorName())
-                    .mon(request.isMon())
-                    .tue(request.isTue())
-                    .wed(request.isWed())
-                    .thu(request.isThu())
-                    .fri(request.isFri())
-                    .classType(request.getClassType())
-                    .color(request.getColor())
-                    .user(user)
-                    .build();
+        Subject subject = Subject.builder()
+                .subjectName(request.getSubjectName())
+                .professorName(request.getProfessorName())
+                .mon(request.isMon())
+                .tue(request.isTue())
+                .wed(request.isWed())
+                .thu(request.isThu())
+                .fri(request.isFri())
+                .classType(request.getClassType())
+                .color(request.getColor())
+                .user(user)
+                .build();
 
-            return subjectRepository.save(subject);
-        }
+        return subjectRepository.save(subject);
+    }
 
-
-    // 하나 조회
     public Subject findById(Integer id) {
         return subjectRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
-    // 모두 조회
     public List<Subject> getAllSubject(String userId) {
         User user = userRepository.findByUserId(userId).orElseThrow(IllegalArgumentException::new);
         return subjectRepository.findAllByUser(user);

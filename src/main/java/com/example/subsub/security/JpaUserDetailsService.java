@@ -20,7 +20,6 @@ public class JpaUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUserId(userId).orElseThrow(
                 () -> new UsernameNotFoundException("Invalid authentication!")
         );
-
         return new CustomUserDetails(user);
     }
 }

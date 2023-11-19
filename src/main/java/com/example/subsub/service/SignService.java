@@ -27,12 +27,12 @@ public class SignService {
 
     @Transactional
     public ResponseEntity<SignResponse> login(SignRequest request) throws Exception {
-        String messsage;
-        if (userRepository.countUserByUserId(request.getUserid())==1){
-            User user = userRepository.findByUserId(request.getUserid()).get();
+        String message;
+        if (userRepository.countUserByUserId(request.getUserId())==1){
+            User user = userRepository.findByUserId(request.getUserId()).get();
 
-            if (!passwordEncoder.matches(request.getPassword(), user.getPassWord())) {
-                messsage = "비밀 번호가 틀립니다.";
+            if (!passwordEncoder.matches(request.getPassWord(), user.getPassWord())) {
+                message = "비밀 번호가 틀립니다.";
 
                 SignResponse signResponse = SignResponse.builder()
                         .id(null)
@@ -41,11 +41,11 @@ public class SignService {
                         .roles(null)
                         .token(null)
                         .result(false)
-                        .message(messsage)
+                        .message(message)
                         .build();
                 return new ResponseEntity<>(signResponse, HttpStatus.UNAUTHORIZED);
             }
-            SignResponse signResponse= SignResponse.builder()
+            SignResponse signResponse = SignResponse.builder()
                     .id(user.getId())
                     .userId(user.getUserId())
                     .nickname(user.getNickName())
@@ -56,16 +56,16 @@ public class SignService {
                     .build();
             return new ResponseEntity<>(signResponse, HttpStatus.OK);
 
-        }else{
-            messsage = "계정이 존재하지 않습니다.";
-            SignResponse signResponse=  SignResponse.builder()
+        } else{
+            message = "계정이 존재하지 않습니다.";
+            SignResponse signResponse = SignResponse.builder()
                     .id(null)
                     .userId(null)
                     .nickname(null)
                     .roles(null)
                     .token(null)
                     .result(false)
-                    .message(messsage)
+                    .message(message)
                     .build();
             return new ResponseEntity<>(signResponse, HttpStatus.NOT_FOUND);
         }
@@ -74,16 +74,16 @@ public class SignService {
     public ResponseEntity<RegisterResponse> register(SignRequest request) throws Exception {
         try {
             User user = User.builder()
-                    .userId(request.getUserid())
-                    .passWord(passwordEncoder.encode(request.getPassword()))
-                    .nickName(request.getNickname())
+                    .userId(request.getUserId())
+                    .passWord(passwordEncoder.encode(request.getPassWord()))
+                    .nickName(request.getNickName())
                     .build();
 
             user.setRoles(Collections.singletonList(Authority.builder().name("ROLE_USER").build()));
 
-            if (userRepository.countUserByUserId(user.getUserId())==0){
+            if (userRepository.countUserByUserId(user.getUserId()) == 0) {
                 userRepository.save(user);
-            }else{
+            } else {
                 return new ResponseEntity<>(new RegisterResponse(false, "중복된 ID"), HttpStatus.CONFLICT);
             }
         } catch (Exception e) {
@@ -94,10 +94,10 @@ public class SignService {
     }
     @Transactional
     public ResponseEntity<SignResponse> getUser(String id) throws Exception {
-        if (userRepository.countUserByUserId(id)==1){
+        if (userRepository.countUserByUserId(id) == 1) {
             User user = userRepository.findByUserId(id).get();
-            return new ResponseEntity<>(new SignResponse(user, true,"계정 조회 성공"), HttpStatus.OK);
-        }else{
+            return new ResponseEntity<>(new SignResponse(user, true, "계정 조회 성공"), HttpStatus.OK);
+        } else {
             SignResponse signResponse = SignResponse.builder()
                     .id(null)
                     .userId(null)
@@ -109,7 +109,5 @@ public class SignService {
                     .build();
             return new ResponseEntity<>(signResponse, HttpStatus.NOT_FOUND);
         }
-
     }
-
 }

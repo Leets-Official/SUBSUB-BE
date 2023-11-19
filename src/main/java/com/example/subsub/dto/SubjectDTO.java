@@ -39,17 +39,4 @@ public class SubjectDTO {
 
     private List<Property> properties;
 
-    public static SubjectDTO toSubjectDto(Subject subject){
-        SubjectDTO subjectDTO = new SubjectDTO();
-        subjectDTO.subjectName = subject.getSubjectName();
-        subjectDTO.professorName = subject.getProfessorName();
-        subjectDTO.classType = subject.getClassType();
-        subjectDTO.color = subject.getColor();
-        subjectDTO.mon = subject.isMon();
-        subjectDTO.tue = subject.isTue();
-        subjectDTO.wed = subject.isWed();
-        subjectDTO.fri = subject.isFri();
-
-        return subjectDTO;
-    }
 }

@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SignResponse {
+
     private Long id;
 
     private String userId;
@@ -24,7 +25,9 @@ public class SignResponse {
     private List<Authority> roles = new ArrayList<>();
 
     private String token;
+
     private Boolean result;
+
     private String message;
 
     public SignResponse(User user, Boolean result, String message) {
@@ -34,6 +37,5 @@ public class SignResponse {
         this.roles = user.getRoles();
         this.result = result;
         this.message = message;
-
     }
 }

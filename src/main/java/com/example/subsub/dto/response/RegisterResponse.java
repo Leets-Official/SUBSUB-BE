@@ -8,8 +8,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 public class RegisterResponse {
+
     private boolean result;
     private String message;
+
     public RegisterResponse(boolean result, String message) {
         this.result = result;
         this.message = message;
