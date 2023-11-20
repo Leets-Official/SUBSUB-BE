@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,6 @@ public class SubjectApiController {
 
     private final SubjectService subjectService;
 
-    //생성
     @Operation(summary = "과목 정보입력하기", description = "과목과 관련된 정보를 입력하면 올라갑니다. ", tags = {"SubjectAPIController"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "입력성공",
@@ -35,15 +35,12 @@ public class SubjectApiController {
             @ApiResponse(responseCode = "404", description = "찾을 수 없습니다."),
             @ApiResponse(responseCode = "500", description = "서버 오류 발생했습니다.")
     })
-
     @PostMapping
-    public SubjectResponse writesave(@RequestBody AddSubjectRequest request, Authentication authentication) throws Exception{
-        Subject savedSubject = subjectService.writesave(request, authentication.getName());
-        return new SubjectResponse(savedSubject);
+    public ResponseEntity<SubjectResponse> writeSave(@RequestBody AddSubjectRequest request, Authentication authentication) throws Exception{
+        Subject savedSubject = subjectService.writeSave(request, authentication.getName());
+        return ResponseEntity.status(HttpStatus.CREATED).body(new SubjectResponse(savedSubject));
     }
 
-
-     // 조회
     @Operation(summary = "과목 정보 조회", description = "입력된 과목 정보를 확인합니다", tags = {"Subject Controller"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "입력성공",
@@ -52,14 +49,12 @@ public class SubjectApiController {
             @ApiResponse(responseCode = "404", description = "찾을 수 없습니다."),
             @ApiResponse(responseCode = "500", description = "서버 오류 발생했습니다.")
     })
-
     @GetMapping("/{id}")
     public ResponseEntity<SubjectResponse> findById(@PathVariable Integer id) {
         Subject subject = subjectService.findById(id);
         return ResponseEntity.ok().body(new SubjectResponse(subject));
     }
 
-    //각 유저의 모든-과목이름 출력
     @GetMapping("/main")
     public ResponseEntity<List<SubjectNameAndColorRes>> getSubjectNameAndColor(Authentication authentication) {
         List<SubjectNameAndColorRes> subjectNameAndColors = subjectService.getAllSubject(authentication.getName())
@@ -69,7 +64,6 @@ public class SubjectApiController {
         return ResponseEntity.ok().body(subjectNameAndColors);
     }
 
-    //삭제
     @Operation(summary = "과목 정보 삭제", description = "입력된 과목 정보가 삭제됩니다.", tags = {"Subject Controller"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "입력성공",

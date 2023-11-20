@@ -8,12 +8,20 @@ import lombok.NoArgsConstructor;
 public class AddSubjectRequest {
 
     private String subjectName;
+
     private String professorName;
+
     private boolean mon;
+
     private boolean tue;
+
     private boolean wed;
+
     private boolean thu;
+
     private boolean fri;
+
     private String classType;
+
     private String color;
 }

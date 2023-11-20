@@ -30,7 +30,6 @@ public class JwtProvider {
 
     private Key secretKey;
 
-    // 만료시간 : 1Hour
     private final long exp = 1000L * 60 * 60;
 
     private final JpaUserDetailsService userDetailsService;
@@ -40,9 +39,8 @@ public class JwtProvider {
         secretKey = Keys.hmacShaKeyFor(salt.getBytes(StandardCharsets.UTF_8));
     }
 
-    // 토큰 생성
-    public String createToken(String userid, List<Authority> roles) {
-        Claims claims = Jwts.claims().setSubject(userid);
+    public String createToken(String userId, List<Authority> roles) {
+        Claims claims = Jwts.claims().setSubject(userId);
         claims.put("roles", roles);
         Date now = new Date();
         return Jwts.builder()
@@ -53,35 +51,29 @@ public class JwtProvider {
                 .compact();
     }
 
-    // 권한정보 획득
-    // Spring Security 인증과정에서 권한확인을 위한 기능
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserId(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    // 토큰에 담겨있는 유저 account 획득
     public String getUserId(String token) {
         return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getSubject();
     }
 
-    // Authorization Header를 통해 인증을 한다.
     public String resolveToken(HttpServletRequest request) {
         return request.getHeader("Authorization");
     }
 
-    // 토큰 검증
     public boolean validateToken(String token) {
         try {
-            // Bearer 검증
             if (!token.substring(0, "BEARER ".length()).equalsIgnoreCase("BEARER ")) {
                 return false;
             } else {
                 token = token.split(" ")[1].trim();
             }
             Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
-            // 만료되었을 시 false
             return !claims.getBody().getExpiration().before(new Date());
+
         } catch (Exception e) {
             return false;
         }

@@ -15,12 +15,12 @@ public class SignController {
     private final SignService userService;
 
     @PostMapping(value = "/login")
-    public ResponseEntity<SignResponse> signin(@RequestBody SignRequest request) throws Exception {
+    public ResponseEntity<SignResponse> signIn(@RequestBody SignRequest request) throws Exception {
         return userService.login(request);
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<RegisterResponse> signup(@RequestBody SignRequest request) throws Exception {
+    public ResponseEntity<RegisterResponse> signUp(@RequestBody SignRequest request) throws Exception {
         return userService.register(request);
     }
 

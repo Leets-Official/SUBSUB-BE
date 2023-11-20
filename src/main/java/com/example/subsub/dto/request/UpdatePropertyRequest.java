@@ -13,6 +13,8 @@ import java.time.LocalDate;
 public class UpdatePropertyRequest {
 
     private final LocalDate expiredAt;
+
     private final String content;
+
     private final Boolean isCompleted;
 }
